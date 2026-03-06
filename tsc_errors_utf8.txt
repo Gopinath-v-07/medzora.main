@@ -1,0 +1,4 @@
+﻿components/PatientDashboard.tsx(273,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/PatientDashboard.tsx(299,18): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/PatientDashboard.tsx(487,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+components/PatientDashboard.tsx(489,53): error TS1005: '</' expected.

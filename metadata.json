@@ -1,0 +1,5 @@
+{
+  "name": "AI Medical Assistant",
+  "description": "A web application for patients to input their symptoms and medical history for AI analysis. Doctors can then review, edit, and verify the AI-generated medical reports.",
+  "requestFramePermissions": []
+}
