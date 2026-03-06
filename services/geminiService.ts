@@ -1,6 +1,8 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PatientData, AIReport } from '../types';
 
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+
 // The dependency on medical_conditions.json has been removed to resolve loading errors
 // and perform analysis directly using the Gemini model's general knowledge.
 // - Removed MedicalCondition interface
@@ -52,7 +54,7 @@ export const analyzePatientData = async (patientData: PatientData): Promise<AIRe
   // 1. Fetch the diagnosis from our local Python ML model
   let modelDiagnosis = "Unknown";
   try {
-    const mlResponse = await fetch('/api/predict', {
+    const mlResponse = await fetch(`${API_BASE}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ symptoms: patientSymptoms })

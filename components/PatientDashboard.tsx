@@ -14,6 +14,8 @@ import { analyzePatientData } from '../services/geminiService';
 import { FolderIcon, DownloadIcon, MessageSquareIcon, PencilIcon, CornerUpRightIcon, PlusIcon, MicIcon, PillIcon, SettingsIcon, ActivityIcon, HeartIcon } from './ui/Icons';
 import ChatInterface from './ChatInterface';
 import { generateReportPDF } from '../services/pdfService';
+
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 import Header from './Header';
 
 const getInitialPatientData = (profile: UserProfile): Omit<PatientData, 'id'> => ({
@@ -94,7 +96,7 @@ const PastReportItem: React.FC<{ record: MedicalRecord, currentUserId: string, a
 
                 console.log("Geolocation retrieved:", lat, lng);
                 try {
-                    const response = await fetch(`/api/nearby-medicals?lat=${lat}&lon=${lng}`, {
+                    const response = await fetch(`${API_BASE}/nearby-medicals?lat=${lat}&lon=${lng}`, {
                         headers: {
                             ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {})
                         }

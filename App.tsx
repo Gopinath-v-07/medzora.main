@@ -13,6 +13,8 @@ interface SignUpData extends UserProfile {
   doctorCode?: string;
 }
 
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+
 const App: React.FC = () => {
   const [user, setUser] = useState<{ role: UserRole, id: string | null }>({ role: UserRole.NONE, id: null });
   const [authToken, setAuthToken] = useState<string | null>(null);
@@ -29,7 +31,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const checkConnections = async () => {
       try {
-        const response = await fetch('/api/health');
+        const response = await fetch(`${API_BASE}/health`);
         setApiStatus(response.ok);
         setDbStatus(response.ok);
       } catch (e) {
@@ -54,7 +56,7 @@ const App: React.FC = () => {
         const params = user.role === UserRole.PATIENT
           ? `?patient_id=${user.id}`
           : `?doctor_id=${user.id}`;
-        const res = await fetch(`/api/records${params}`, {
+        const res = await fetch(`${API_BASE}/records${params}`, {
           headers: { ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}) }
         });
         if (res.ok) {
@@ -73,7 +75,7 @@ const App: React.FC = () => {
 
   const handleLogin = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -95,7 +97,7 @@ const App: React.FC = () => {
 
   const handleSignUp = async (data: Omit<SignUpData, 'id'>): Promise<'SUCCESS' | 'ID_EXISTS' | 'INVALID_CODE'> => {
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch(`${API_BASE}/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -145,7 +147,7 @@ const App: React.FC = () => {
 
   const addOrUpdateRecord = async (record: MedicalRecord) => {
     try {
-      await fetch('/api/records', {
+      await fetch(`${API_BASE}/records`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
